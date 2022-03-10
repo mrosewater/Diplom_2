@@ -30,16 +30,20 @@ public class ProfileTest {
         ValidatableResponse response = userService.edit(userCredentials, token);
         int statusCode = response.extract().statusCode();
         Assert.assertEquals("Неправильный статус.", 200, statusCode);
-        userService.delete(token);
     }
 
     @Test
     @DisplayName("Изменение данных пользователя без авторизации")
     public void unauthorizedEditProfileTest() {
-        userService.create(user);
+        token = userService.create(user).extract().path("accessToken").toString().substring(7);
         ValidatableResponse response = userService.unauthorizedEdit(userCredentials);
         int statusCode = response.extract().statusCode();
         Assert.assertEquals("Неправильный статус.", 401, statusCode);
+    }
+
+    @After
+    public void tearDown() {
+        userService.delete(token);
     }
 
 }
