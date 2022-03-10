@@ -1,5 +1,6 @@
 package ru.praktikum.burger;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
@@ -8,6 +9,7 @@ public class UserService extends RestAssuredService {
 
     private static final String BASE_PATH = "https://stellarburgers.nomoreparties.site/";
 
+    @Step("Создание пользователя")
     public ValidatableResponse create(User user) {
         return given()
                 .spec(getBaseSpec())
@@ -17,6 +19,7 @@ public class UserService extends RestAssuredService {
                 .then();
     }
 
+    @Step("Авторизация пользователя")
     public ValidatableResponse login(UserCredentials credentials) {
         return given()
                 .spec(getBaseSpec())
@@ -26,6 +29,7 @@ public class UserService extends RestAssuredService {
                 .then();
     }
 
+    @Step("Редактирование пользователя с авторизацией")
     public ValidatableResponse edit(UserCredentials updatedCredentials, String token) {
         return given()
                 .spec(getBaseSpec())
@@ -37,6 +41,7 @@ public class UserService extends RestAssuredService {
                 .then();
     }
 
+    @Step("Редактирование пользователя без авторизации")
     public ValidatableResponse unauthorizedEdit(UserCredentials updatedCredentials) {
         return given()
                 .spec(getBaseSpec())
@@ -46,6 +51,7 @@ public class UserService extends RestAssuredService {
                 .then();
     }
 
+    @Step("Удаление пользователя")
     public void delete(String token) {
         given()
                 .spec(getBaseSpec())

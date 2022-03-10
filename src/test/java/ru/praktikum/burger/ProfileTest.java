@@ -1,5 +1,6 @@
 package ru.praktikum.burger;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,6 +22,7 @@ public class ProfileTest {
     }
 
     @Test
+    @DisplayName("Изменение данных пользователя с авторизацией")
     public void editProfileTest() {
         token = userService.create(user).extract().path("accessToken").toString().substring(7);
         userService = new UserService();
@@ -32,6 +34,7 @@ public class ProfileTest {
     }
 
     @Test
+    @DisplayName("Изменение данных пользователя без авторизации")
     public void unauthorizedEditProfileTest() {
         userService.create(user);
         ValidatableResponse response = userService.unauthorizedEdit(userCredentials);

@@ -1,6 +1,8 @@
 package ru.praktikum.burger;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +22,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Логин под существующим пользователем")
     public void loginTest() {
         token = userService.create(user).extract().path("accessToken").toString().substring(7);
         ValidatableResponse response = userService.login(userCredentials);
@@ -28,11 +31,9 @@ public class LoginTest {
         userService.delete(token);
     }
 
-    @Test
-    public void invalidUserLoginTest() {
-        ValidatableResponse response = userService.login(userCredentials);
-        int statusCode = response.extract().statusCode();
-        Assert.assertEquals("Неправильный статус.", 401, statusCode);
+    @After
+    public void tearDown() {
+        userService.delete(token);
     }
 
 }

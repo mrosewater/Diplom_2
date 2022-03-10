@@ -1,5 +1,6 @@
 package ru.praktikum.burger;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,6 +32,7 @@ public class ValidateUserCreationTest {
     }
 
     @Test
+    @DisplayName("Создание пользователя если одно из обязательных полей не заполнено")
     public void invalidRequestTest() {
 
         ValidatableResponse response = userService.create(user);

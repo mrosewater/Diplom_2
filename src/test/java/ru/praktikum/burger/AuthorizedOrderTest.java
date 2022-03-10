@@ -1,5 +1,6 @@
 package ru.praktikum.burger;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Assert;
@@ -20,6 +21,7 @@ public class AuthorizedOrderTest {
     }
 
     @Test
+    @DisplayName("Создание заказа с авторизацией")
     public void placeAuthorizedOrder() {
         token = userService.create(user).extract().path("accessToken").toString().substring(7);
         ValidatableResponse response = orderService.placeAuthorizedOrder(token, ingredients);
@@ -28,7 +30,7 @@ public class AuthorizedOrderTest {
         int orderNumber = response.extract().path("order.number");
         Assert.assertNotNull(orderNumber);
     }
-
+    @DisplayName("Получение списка заказов авторизованным пользователем")
     @Test
     public void getAuthorizedOrderList() {
         token = userService.create(user).extract().path("accessToken").toString().substring(7);
